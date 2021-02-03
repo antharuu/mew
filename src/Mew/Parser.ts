@@ -1,53 +1,58 @@
-const pretty = require("pretty")
-import {Htmlify} from "./Htmlify"
+import pretty = require("pretty");
+import {Htmlify} from "./Htmlify";
+
+import {IMewConf} from "./Interfaces/IMewConf";
 import {BlockElement} from "./Logic/BlockElement";
+
+import {CustomAttributes} from "./Config/CustomAttributes";
+import {Attributes} from "./Types/Attributes";
 import {Variables} from "./Variables";
 
-const customAttributes = [
-    {name: "class", symbol: "."},
-    {name: "id", symbol: "#"},
-    {name: "href", symbol: "@"},
-    {name: "null", symbol: ":"}
-]
-
 export class Parser {
-    private lines: string[]; // Lines to work on
-    blocks: BlockElement[]; // Blocks of logic
+    InputCode: string[];
+    Conf: IMewConf;
+    Blocks: BlockElement[]
 
-    finalCode: string; // Code to export
-
-    constructor(inputCode: string, options: Object) {
-        this.lines = inputCode.split("\n")
-        this.purgeLines();
-        this.blocks = this.defineBlockOf(this.lines)
-        this.finalCode = pretty(Htmlify(this.blocks, 0, options))
+    constructor(InputCode: string, Conf: IMewConf) {
+        this.Conf = Conf;
+        this.InputCode = this.purgeCode(InputCode.split("\n"))
+        Variables.Data = {...Variables.Data, ...Conf.variables}
+        this.Blocks = this.defineBlocksOf(this.InputCode)
     }
 
     /**
-     * Base line cleanups
+     * Return the final code
+     * @returns {string}
      */
-    private purgeLines(): void {
-        let newLines: Array<string> = [];
-        this.lines.forEach(line => {
-            // Remove the line break symbol
+    public getFinalCode(): string {
+        let htmlCode = Htmlify(this.Blocks, 0, this.Conf)
+        if (this.Conf.pretty) htmlCode = pretty(htmlCode)
+        return htmlCode;
+    }
+
+    /**
+     * Remove unsable or useless code
+     * @param lines {string}
+     * @returns {string[]}
+     */
+    private purgeCode(lines: string[]): string[] {
+        let newLines: string[] = [];
+        lines.forEach(line => {
+            // Remove the line break symbols
             line = line.replace(/(\r\n|\n|\r)/gm, "")
 
             // Remove empty lines
             if (line.trim().length > 0) newLines.push(line)
         })
-        this.lines = newLines;
+        return newLines;
     }
 
-    /**
-     * Set the logic from lines
-     * @param lines
-     * @private
-     */
-    private defineBlockOf(lines: Array<string>) {
-        let blocks: BlockElement[] = [],
+    private defineBlocksOf(InputCode: string[]): BlockElement[] {
+        let returnBlocks: BlockElement[] = [],
             currentLine: number = 0,
             ignoredLines: number = 0;
-        lines.forEach(line => {
+
+        InputCode.forEach(line => {
             const indent = line.length - line.trimStart().length;
             if (ignoredLines === 0) { // Starting a new block
                 ignoredLines++;
@@ -73,7 +78,7 @@ export class Parser {
                     let blockEnded = false;
                     const currBlock: string[] = [];
 
-                    lines.forEach(l => {
+                    InputCode.forEach(l => {
                         if (checkedLines > currentLine && !blockEnded) {
                             const i = l.length - l.trimStart().length;
                             if (i > indent) {
@@ -84,14 +89,15 @@ export class Parser {
                         checkedLines += 1;
                     })
 
-                    const currentBlock = new BlockElement()
-                    currentBlock.tag = tag
-                    currentBlock.content = content.join(" ")
-                    currentBlock.attributes = attrib
-                    currentBlock.block = this.defineBlockOf(currBlock) // <- Recursive
-                    currentBlock.line = line // <- Recursive
+                    const currentBlock = new BlockElement({
+                        tag: tag,
+                        content: content.join(" "),
+                        attributes: attrib,
+                        block: this.defineBlocksOf(currBlock), // <- Recursive
+                        line: line
+                    })
 
-                    blocks.push(currentBlock)
+                    returnBlocks.push(currentBlock)
                 }
             }
 
@@ -99,36 +105,31 @@ export class Parser {
             if (ignoredLines > 0) ignoredLines--;
         })
 
-        return blocks;
+        return returnBlocks;
     }
-
-    clearLineAttr = (line: string): string => {
-        line = line.trim()
-        let start = line.indexOf("("),
-            end = this.getAttrPartLen(line) + start,
-            block = -1,
-            closed: boolean = false,
-            pre: string = line.substr(0, start)
-        return pre + line.substr(end + 1);
-    };
 
     /**
      * returns the defined html attributes
      * @param words
+     * @return {Attributes}
      */
-    getDefinedAttributesFrom = (words: string[]): {} => {
+    private getDefinedAttributesFrom = (words: string[]): {} => {
         let line: string = words.join(" ")
         let regex = /(?<attr>[\w]+)="(?<value>[^"\\]*(?:\\[\w\W][^"\\]*)*)"/g;
-        let m: RegExpExecArray, results: Object = {};
+        let m: RegExpExecArray, results: Attributes = {};
         while ((m = regex.exec(line)) !== null) {
             if (m.index === regex.lastIndex) regex.lastIndex++;
-            // @ts-ignore
             results[m[1]] = [m[2]];
         }
         return results
     };
 
-    getAttrPartLen(line: string) {
+    /**
+     * Return the length of the Attributes part
+     * @param line
+     * @returns {number}
+     */
+    private static getAttrPartLen(line: string) {
         let start = line.indexOf("("),
             end = 0,
             block = -1,
@@ -152,49 +153,72 @@ export class Parser {
      * Add quick attributes of the line
      * @param line
      */
-    getAttributesFrom = (line: string): Object => {
+    private getAttributesFrom = (line: string): Attributes => {
         line = line.trim().split(" ")[0]
 
         let attrsSymboles: string = "";
-        customAttributes.forEach(attr => {
-            attrsSymboles += attr.symbol
-        })
+        CustomAttributes.forEach(attr => attrsSymboles += attr.symbol)
 
         const regex = new RegExp('([' + attrsSymboles + '][-_/\\w]+)', 'g');
-        let m: RegExpExecArray, results = {};
+        let m: RegExpExecArray, results: Attributes = {};
         while ((m = regex.exec(line)) !== null) {
             if (m.index === regex.lastIndex) regex.lastIndex++;
-            customAttributes.forEach(attr => {
-                if (attr.name !== "null") results = this.addAttrFrom(results, m[1], attr.symbol, attr.name)
-                else results = this.addAttrNullFrom(results, m[1], attr.symbol, attr.name)
+            CustomAttributes.forEach(attr => {
+                if (attr.name !== "null") results = this.addAttrFrom(results, m[1], attr.symbol, attr.name) as Attributes
+                else results = this.addAttrNullFrom(results, m[1], attr.symbol, attr.name) as Attributes
             })
         }
         return results
     };
 
-    addAttrFrom = (attrs: Object, attr: string, symbol: string, name: string) => {
+    /**
+     * Remove attributes part
+     * @param line
+     * @returns {string}
+     */
+    private clearLineAttr = (line: string): string => {
+        line = line.trim()
+        let start = line.indexOf("("),
+            end = Parser.getAttrPartLen(line) + start,
+            pre: string = line.substr(0, start)
+        return pre + line.substr(end + 1);
+    };
+
+    /**
+     * Return attributes
+     * @param attrs
+     * @param attr
+     * @param symbol
+     * @param name
+     * @returns {Attributes}
+     */
+    private addAttrFrom = (attrs: Attributes, attr: string, symbol: string, name: string) => {
         if (attr.charAt(0) === symbol) {
             attr = attr.substring(1)
-            // @ts-ignore
             if (attrs[name] ?? false) attrs[name].push(attr)
-            else { // @ts-ignore
+            else {
                 attrs[name] = [attr]
             }
         }
         return attrs;
     }
 
-    addAttrNullFrom = (attrs: Object, attr: string, symbol: string, name: string) => {
+    /**
+     * Return attributes with no values
+     * @param attrs
+     * @param attr
+     * @param symbol
+     * @param name
+     * @returns {Attributes}
+     */
+    private addAttrNullFrom = (attrs: Attributes, attr: string, symbol: string, name: string) => {
         if (attr.charAt(0) === symbol) {
             attr = attr.substring(1)
-            // @ts-ignore
             if (attrs[name] ?? false) attrs[name].push(attr)
-            else { // @ts-ignore
+            else {
                 attrs[attr] = null
             }
         }
         return attrs;
     }
-
-    getFinalCode = () => this.finalCode ?? "";
 }
