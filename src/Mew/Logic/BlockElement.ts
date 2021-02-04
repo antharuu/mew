@@ -8,14 +8,16 @@ export class BlockElement {
     block: BlockElement[]
     line: string
     infos: IElement
+    isLogic: boolean = false
 
-    constructor(elementOptions: IElement = {tag: "div"}) {
+    constructor(elementOptions: IElement = {tag: "div", isLogic: false}) {
         let optionsExport: {
             attributes: {};
             block: BlockElement[];
             content: string;
             line: string;
             tag: string;
+            isLogic: boolean;
         };
         optionsExport = {
             attributes: {},
@@ -23,6 +25,7 @@ export class BlockElement {
             content: "",
             line: "",
             tag: "div",
+            isLogic: false,
             ...elementOptions
         };
 

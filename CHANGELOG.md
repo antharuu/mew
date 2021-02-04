@@ -1,3 +1,8 @@
+### 0.2.1
+
+- Simple for in loops as been added
+- Variables can now be blocked scoped
+
 ### 0.2.0
 
 #### New features & changes

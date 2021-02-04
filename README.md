@@ -17,10 +17,10 @@ Todo before 1.0:
 - Adding mixins
 - Adding loops
     - While
-    - For
+    - ✓ For
 - Adding conditions
 - Adding includes
-    - Inlucdes
+    - Includes
     - Templates
 
 ...And probably a lot of other things

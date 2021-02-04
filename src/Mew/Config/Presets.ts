@@ -1,5 +1,6 @@
 import {BlockElement} from "../Logic/BlockElement";
 import {Preset} from "../Logic/Preset";
+import {Variables} from "../Variables";
 
 const getAttributeBlockContent = (attrName: string, rBlock: BlockElement, oldBlock: BlockElement) => {
     rBlock.attributes[attrName] = [oldBlock.content]
@@ -77,6 +78,32 @@ export const Presets = [
             if (oldBlock.content === "") oldBlock.content = "1.0";
             rBlock.attrReplace("content", "$size$", oldBlock.content)
             return rBlock
+        }
+    ),
+    new Preset(
+        "loop-for",
+        new BlockElement(),
+        (rBlock: BlockElement, oldBlock: BlockElement) => {
+
+            const token = Math.round(Math.random() * 5000000)
+
+            const iterationName = oldBlock.attributes.iteration[0]
+            let iteration: Array<any> = []
+            for (const [key, value] of Object.entries(Variables.Data)) if (key === iterationName) iteration = value
+            const variableName = oldBlock.attributes.value[0]
+
+            const blocks: BlockElement[] = oldBlock.block;
+
+            iteration.forEach((value: any) => {
+                Variables.DataBlock[variableName] = value;
+                blocks.forEach((b: BlockElement) => {
+                    rBlock.block.push(Variables.checkBlock(b))
+                })
+            })
+
+            Variables.DataBlock = {};
+            rBlock.isLogic = true
+            return rBlock;
         }
     )
 ]

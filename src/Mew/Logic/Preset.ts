@@ -1,6 +1,5 @@
 import {BlockElement} from "./BlockElement";
 import {IAction} from "../Interfaces/IAction";
-import {IElement} from "../Interfaces/IElement";
 
 export class Preset {
     tag: string
@@ -10,7 +9,7 @@ export class Preset {
     constructor(
         tag: string,
         output: BlockElement = new BlockElement(),
-        callback: CallableFunction = (r: BlockElement, old: BlockElement) => r
+        callback: IAction = (r: BlockElement, old: BlockElement) => r
     ) {
         this.tag = tag
         this.output = output

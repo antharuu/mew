@@ -1,6 +1,6 @@
 {
   "name": "mewjs",
-  "version": "0.1.6",
+  "version": "0.2.1",
   "description": "Mew is an HTML preprocessor, still under development with \"PUG\" as main inspiration. The goal is to make it more pleasant and easy to use. It is written in typescript.",
   "keywords": [
     "mew",

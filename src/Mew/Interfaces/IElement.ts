@@ -7,4 +7,5 @@ export interface IElement {
     content?: string,
     line?: string
     tag: string,
+    isLogic: boolean
 }
