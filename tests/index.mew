@@ -1,4 +1,6 @@
 $myCss = "css/main.css"
+$fruits = ["poires", "pommes", "pateques", "framboises"]
+$user = {name: "Paul", age: 48, is_online: false}
 
 doctype
 html

@@ -9,15 +9,16 @@ Todo before 1.0:
 - ✓ A similar base to PUG
 - ✓ Add a preset system
 - ✓ Custom presets
-- ✓ Adding variables (not typed for now)
-    - String
-    - Number
-    - Array
-    - Objects
+- ✓ Adding variables
+    - ✓ String
+    - ✓ Int
+    - ✓ Float
+    - ✓ Array
+    - ✓ Objects
 - Adding mixins
 - Adding loops
     - While
-    - ✓ For
+    - ✓ For _(only for in for now)_
 - Adding conditions
 - Adding includes
     - Includes
@@ -70,6 +71,8 @@ Now able to transform this
 
 ```pug
 $myCss = "css/main.css"
+$fruits = ["poires", "pommes", "pateques", "framboises"]
+$user = {name: "Paul", age: 48, is_online: false}
 
 doctype
 html
@@ -81,6 +84,9 @@ html
   body
     $bonjour = "Hello world"
     .container
+      for fruit in fruits
+        h2 J'adore les {{fruit}}
+            a # Voir ce fruit
       .row.justify-contents-center
         .col-6
           h1 {{bonjour}}
@@ -88,6 +94,8 @@ html
             img#catImage https://unsplash.com/photos/_Kbydj4K7W8 Cat super image!
         section#main.col-6
           h2 Enjoy the new MEW preprocessor!
+            fa b github
+            | on github too!
           button:disabled My super button
           p check here
             a {{github}} Mew on Github
@@ -101,28 +109,28 @@ To this:
 <html>
 
 <head>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/secondary.css">
-    <title>Bonjour le monde!</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/main.css">
+  <title>Hello world from Mew! ♥</title>
 </head>
 
 <body>
 <div class="container">
-    <div class="row justify-contents-center">
-        <div class="col-6">
-            <h1>Hello world</h1>
-            <div id="maSuperImage"><img id="catImage" src="https://unsplash.com/photos/_Kbydj4K7W8"
-                                        alt="Cat super image!"></div>
-        </div>
-        <section id="main" class="col-6">
-            <h2>Enjoy the new MEW preprocessor!</h2>
-            <button disabled>My super button</button>
-            <p>check here<a href="https://github.com/antharuu/Mew">Mew on Github</a> if you want</p>
-        </section>
+  <h2>J'adore les poires</h2>
+  <h2>J'adore les pommes</h2>
+  <h2>J'adore les pateques</h2>
+  <h2>J'adore les framboises</h2>
+  <div class="row justify-contents-center">
+    <div class="col-6">
+      <h1>Hello world</h1>
+      <div id="maSuperImage"><img id="catImage" src_old="https://unsplash.com/photos/_Kbydj4K7W8" alt="Cat super image!"></div>
     </div>
+    <section id="main" class="col-6">
+      <h2>Enjoy the new MEW preprocessor!<fa>b github</fa>on github too!</h2><button disabled>My super button</button>
+      <p>check here<a href="https://github.com/antharuu/Mew">Mew on Github</a> if you want</p>
+    </section>
+  </div>
 </div>
 </body>
 

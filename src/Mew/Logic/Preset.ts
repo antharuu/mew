@@ -9,7 +9,7 @@ export class Preset {
     constructor(
         tag: string,
         output: BlockElement = new BlockElement(),
-        callback: IAction = (r: BlockElement, old: BlockElement) => r
+        callback: IAction = (r: BlockElement) => r
     ) {
         this.tag = tag
         this.output = output

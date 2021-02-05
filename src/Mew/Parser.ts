@@ -16,7 +16,7 @@ export class Parser {
     constructor(InputCode: string, Conf: IMewConf) {
         this.Conf = Conf;
         this.InputCode = this.purgeCode(InputCode.split("\n"))
-        Variables.Data = {...Variables.Data, ...Conf.variables}
+        Variables.addVariables(Conf.variables)
         this.Blocks = this.defineBlocksOf(this.InputCode)
     }
 

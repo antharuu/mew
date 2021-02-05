@@ -1,6 +1,6 @@
 {
   "name": "mewjs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Mew is an HTML preprocessor, still under development with \"PUG\" as main inspiration. The goal is to make it more pleasant and easy to use. It is written in typescript.",
   "keywords": [
     "mew",
@@ -28,6 +28,7 @@
   "dependencies": {
     "@types/node": "^14.14.22",
     "@types/pretty": "^2.0.0",
+    "object-string-to-object": "^1.0.2",
     "pretty": "^2.0.0",
     "ts-node": "^9.1.1",
     "typescript-bundle": "^1.0.17"

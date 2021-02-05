@@ -1,3 +1,8 @@
+### 0.2.2
+
+- Variables are now a Variable Object that automatically detects the type.
+- `Variables.getData()` now returns an array of variables and no longer an object.
+
 ### 0.2.1
 
 - Simple for in loops as been added
