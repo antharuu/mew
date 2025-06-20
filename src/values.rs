@@ -180,6 +180,9 @@ pub enum Color {
 
     /// Inherit color
     Inherit,
+
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for Color {
@@ -344,6 +347,7 @@ impl fmt::Display for Color {
             Color::Hsla(h, s, l, a) => write!(f, "hsla({}, {}%, {}%, {})", h, s, l, a),
             Color::CurrentColor => write!(f, "currentColor"),
             Color::Inherit => write!(f, "inherit"),
+            Color::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -353,7 +357,7 @@ impl fmt::Display for Color {
 pub enum Size {
     /// Constants
     Zero,
-    
+
     /// Pixel values
     Px(u32),
     /// Percentage values
@@ -368,6 +372,8 @@ pub enum Size {
     Vh(f32),
     /// Auto value
     Auto,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for Size {
@@ -381,6 +387,7 @@ impl fmt::Display for Size {
             Size::Vw(val) => write!(f, "{}vw", val),
             Size::Vh(val) => write!(f, "{}vh", val),
             Size::Auto => write!(f, "auto"),
+            Size::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -395,6 +402,8 @@ pub enum Display {
     Flex,
     Grid,
     Table,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for Display {
@@ -407,6 +416,7 @@ impl fmt::Display for Display {
             Display::Flex => write!(f, "flex"),
             Display::Grid => write!(f, "grid"),
             Display::Table => write!(f, "table"),
+            Display::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -419,6 +429,8 @@ pub enum Position {
     Absolute,
     Fixed,
     Sticky,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for Position {
@@ -429,6 +441,7 @@ impl fmt::Display for Position {
             Position::Absolute => write!(f, "absolute"),
             Position::Fixed => write!(f, "fixed"),
             Position::Sticky => write!(f, "sticky"),
+            Position::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -440,6 +453,8 @@ pub enum FlexDirection {
     RowReverse,
     Column,
     ColumnReverse,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for FlexDirection {
@@ -449,6 +464,7 @@ impl fmt::Display for FlexDirection {
             FlexDirection::RowReverse => write!(f, "row-reverse"),
             FlexDirection::Column => write!(f, "column"),
             FlexDirection::ColumnReverse => write!(f, "column-reverse"),
+            FlexDirection::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -462,6 +478,8 @@ pub enum JustifyContent {
     SpaceBetween,
     SpaceAround,
     SpaceEvenly,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for JustifyContent {
@@ -473,6 +491,7 @@ impl fmt::Display for JustifyContent {
             JustifyContent::SpaceBetween => write!(f, "space-between"),
             JustifyContent::SpaceAround => write!(f, "space-around"),
             JustifyContent::SpaceEvenly => write!(f, "space-evenly"),
+            JustifyContent::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -485,6 +504,8 @@ pub enum AlignItems {
     Center,
     Baseline,
     Stretch,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for AlignItems {
@@ -495,6 +516,7 @@ impl fmt::Display for AlignItems {
             AlignItems::Center => write!(f, "center"),
             AlignItems::Baseline => write!(f, "baseline"),
             AlignItems::Stretch => write!(f, "stretch"),
+            AlignItems::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -508,6 +530,8 @@ pub enum FontWeight {
     Lighter,
     /// Numeric weight (100-900)
     Weight(u16),
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for FontWeight {
@@ -524,7 +548,8 @@ impl fmt::Display for FontWeight {
                 } else {
                     write!(f, "400") // Default to normal if invalid
                 }
-            }
+            },
+            FontWeight::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -538,6 +563,8 @@ pub enum TextAlign {
     Justify,
     Start,
     End,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for TextAlign {
@@ -549,6 +576,7 @@ impl fmt::Display for TextAlign {
             TextAlign::Justify => write!(f, "justify"),
             TextAlign::Start => write!(f, "start"),
             TextAlign::End => write!(f, "end"),
+            TextAlign::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -560,6 +588,8 @@ pub enum TextDecoration {
     Underline,
     Overline,
     LineThrough,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for TextDecoration {
@@ -569,6 +599,7 @@ impl fmt::Display for TextDecoration {
             TextDecoration::Underline => write!(f, "underline"),
             TextDecoration::Overline => write!(f, "overline"),
             TextDecoration::LineThrough => write!(f, "line-through"),
+            TextDecoration::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -581,6 +612,8 @@ pub enum Overflow {
     Scroll,
     Auto,
     Clip,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for Overflow {
@@ -591,6 +624,7 @@ impl fmt::Display for Overflow {
             Overflow::Scroll => write!(f, "scroll"),
             Overflow::Auto => write!(f, "auto"),
             Overflow::Clip => write!(f, "clip"),
+            Overflow::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -607,6 +641,8 @@ pub enum Cursor {
     Grab,
     ZoomIn,
     ZoomOut,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for Cursor {
@@ -621,6 +657,7 @@ impl fmt::Display for Cursor {
             Cursor::Grab => write!(f, "grab"),
             Cursor::ZoomIn => write!(f, "zoom-in"),
             Cursor::ZoomOut => write!(f, "zoom-out"),
+            Cursor::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -631,6 +668,8 @@ pub enum Visibility {
     Visible,
     Hidden,
     Collapse,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for Visibility {
@@ -639,6 +678,7 @@ impl fmt::Display for Visibility {
             Visibility::Visible => write!(f, "visible"),
             Visibility::Hidden => write!(f, "hidden"),
             Visibility::Collapse => write!(f, "collapse"),
+            Visibility::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -655,6 +695,8 @@ pub enum BorderStyle {
     Ridge,
     Inset,
     Outset,
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for BorderStyle {
@@ -669,6 +711,7 @@ impl fmt::Display for BorderStyle {
             BorderStyle::Ridge => write!(f, "ridge"),
             BorderStyle::Inset => write!(f, "inset"),
             BorderStyle::Outset => write!(f, "outset"),
+            BorderStyle::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -698,6 +741,8 @@ pub enum FontSize {
     XxLarge,
     /// Calculated value
     Calc(String),
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for FontSize {
@@ -717,6 +762,7 @@ impl fmt::Display for FontSize {
             FontSize::XLarge => write!(f, "x-large"),
             FontSize::XxLarge => write!(f, "xx-large"),
             FontSize::Calc(expr) => write!(f, "calc({})", expr),
+            FontSize::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -734,6 +780,8 @@ pub enum LineHeight {
     Percent(f32),
     /// Calculated value
     Calc(String),
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for LineHeight {
@@ -744,6 +792,7 @@ impl fmt::Display for LineHeight {
             LineHeight::Length(size) => write!(f, "{}", size),
             LineHeight::Percent(val) => write!(f, "{}%", val),
             LineHeight::Calc(expr) => write!(f, "calc({})", expr),
+            LineHeight::Var(var) => write!(f, "{}", var),
         }
     }
 }
@@ -813,6 +862,8 @@ impl fmt::Display for Transition {
 pub enum ZIndex {
     Auto,
     Index(i32),
+    /// CSS variable
+    Var(crate::variable::CssVar),
 }
 
 impl fmt::Display for ZIndex {
@@ -820,6 +871,126 @@ impl fmt::Display for ZIndex {
         match self {
             ZIndex::Auto => write!(f, "auto"),
             ZIndex::Index(val) => write!(f, "{}", val),
+            ZIndex::Var(var) => write!(f, "{}", var),
         }
+    }
+}
+
+// Implement From<CssVar> for Color to allow automatic conversion
+impl From<crate::variable::CssVar> for Color {
+    fn from(var: crate::variable::CssVar) -> Self {
+        Color::Var(var)
+    }
+}
+
+// Implement From<CssVar> for Size to allow automatic conversion
+impl From<crate::variable::CssVar> for Size {
+    fn from(var: crate::variable::CssVar) -> Self {
+        Size::Var(var)
+    }
+}
+
+// Implement From<CssVar> for Display to allow automatic conversion
+impl From<crate::variable::CssVar> for Display {
+    fn from(var: crate::variable::CssVar) -> Self {
+        Display::Var(var)
+    }
+}
+
+// Implement From<CssVar> for Position to allow automatic conversion
+impl From<crate::variable::CssVar> for Position {
+    fn from(var: crate::variable::CssVar) -> Self {
+        Position::Var(var)
+    }
+}
+
+// Implement From<CssVar> for FlexDirection to allow automatic conversion
+impl From<crate::variable::CssVar> for FlexDirection {
+    fn from(var: crate::variable::CssVar) -> Self {
+        FlexDirection::Var(var)
+    }
+}
+
+// Implement From<CssVar> for JustifyContent to allow automatic conversion
+impl From<crate::variable::CssVar> for JustifyContent {
+    fn from(var: crate::variable::CssVar) -> Self {
+        JustifyContent::Var(var)
+    }
+}
+
+// Implement From<CssVar> for AlignItems to allow automatic conversion
+impl From<crate::variable::CssVar> for AlignItems {
+    fn from(var: crate::variable::CssVar) -> Self {
+        AlignItems::Var(var)
+    }
+}
+
+// Implement From<CssVar> for FontWeight to allow automatic conversion
+impl From<crate::variable::CssVar> for FontWeight {
+    fn from(var: crate::variable::CssVar) -> Self {
+        FontWeight::Var(var)
+    }
+}
+
+// Implement From<CssVar> for TextAlign to allow automatic conversion
+impl From<crate::variable::CssVar> for TextAlign {
+    fn from(var: crate::variable::CssVar) -> Self {
+        TextAlign::Var(var)
+    }
+}
+
+// Implement From<CssVar> for TextDecoration to allow automatic conversion
+impl From<crate::variable::CssVar> for TextDecoration {
+    fn from(var: crate::variable::CssVar) -> Self {
+        TextDecoration::Var(var)
+    }
+}
+
+// Implement From<CssVar> for Overflow to allow automatic conversion
+impl From<crate::variable::CssVar> for Overflow {
+    fn from(var: crate::variable::CssVar) -> Self {
+        Overflow::Var(var)
+    }
+}
+
+// Implement From<CssVar> for Cursor to allow automatic conversion
+impl From<crate::variable::CssVar> for Cursor {
+    fn from(var: crate::variable::CssVar) -> Self {
+        Cursor::Var(var)
+    }
+}
+
+// Implement From<CssVar> for Visibility to allow automatic conversion
+impl From<crate::variable::CssVar> for Visibility {
+    fn from(var: crate::variable::CssVar) -> Self {
+        Visibility::Var(var)
+    }
+}
+
+// Implement From<CssVar> for BorderStyle to allow automatic conversion
+impl From<crate::variable::CssVar> for BorderStyle {
+    fn from(var: crate::variable::CssVar) -> Self {
+        BorderStyle::Var(var)
+    }
+}
+
+// Implement From<CssVar> for ZIndex to allow automatic conversion
+impl From<crate::variable::CssVar> for ZIndex {
+    fn from(var: crate::variable::CssVar) -> Self {
+        ZIndex::Var(var)
+    }
+}
+
+// Implement From<CssVar> for FontSize to allow automatic conversion
+impl From<crate::variable::CssVar> for FontSize {
+    fn from(var: crate::variable::CssVar) -> Self {
+        FontSize::Var(var)
+    }
+}
+
+// Implement From<CssVar> for LineHeight to allow automatic conversion
+impl From<crate::variable::CssVar> for LineHeight {
+    fn from(var: crate::variable::CssVar) -> Self {
+        LineHeight::Var(var)
     }
 }
