@@ -67,6 +67,23 @@ fn main() {
 }
 ```
 
+### CSS Variables
+
+```rust
+use mew::{style, var};
+use mew::values::{Color};
+
+fn main() {
+    let css = style()
+        .set_var("primary", Color::Red)
+        .custom_property("color", var("primary"))
+        .apply();
+
+    println!("{}", css);
+    // Output: --primary: red; color: var(--primary);
+}
+```
+
 ## Available CSS Properties
 
 ### Color Properties

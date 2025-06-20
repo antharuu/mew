@@ -3,6 +3,7 @@
 #[cfg(test)]
 mod tests {
     use crate::style;
+    use crate::variable::var;
     use crate::values::{
         AlignItems, BorderStyle, BoxShadow, Color, Cursor, Display, FlexDirection, FontSize,
         FontWeight, JustifyContent, LineHeight, Overflow, Position, Size, TextAlign, TextDecoration,
@@ -455,5 +456,16 @@ mod tests {
         assert!(css.contains("visibility: visible;"));
         assert!(css.contains("visibility: hidden;"));
         assert!(css.contains("visibility: collapse;"));
+    }
+
+    #[test]
+    fn test_css_variables() {
+        let css = style()
+            .set_var("primary", Color::Blue)
+            .custom_property("color", var("primary"))
+            .apply();
+
+        assert!(css.contains("--primary: blue;"));
+        assert!(css.contains("color: var(--primary);"));
     }
 }

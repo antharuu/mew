@@ -20,6 +20,7 @@
 pub mod style;
 pub mod values;
 pub mod properties;
+pub mod variable;
 
 // Include integration tests
 #[cfg(test)]
@@ -27,3 +28,4 @@ mod tests;
 
 // Re-export the main API entry point
 pub use style::style;
+pub use variable::{CssVar, var};

@@ -36,6 +36,22 @@ impl Style {
         self.apply()
     }
 
+    /// Add a custom property. This allows using raw property names and values
+    /// such as CSS variables.
+    pub fn custom_property<T: fmt::Display>(&mut self, name: &str, value: T) -> &mut Self {
+        self.add_property(Property::new(name, value))
+    }
+
+    /// Define a CSS variable (custom property).
+    pub fn set_var<T: fmt::Display>(&mut self, name: &str, value: T) -> &mut Self {
+        let var_name = if name.trim().starts_with("--") {
+            name.trim().to_string()
+        } else {
+            format!("--{}", name.trim())
+        };
+        self.custom_property(&var_name, value)
+    }
+
     // Color properties
 
     /// Set the color property
