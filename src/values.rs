@@ -351,6 +351,9 @@ impl fmt::Display for Color {
 /// Size values for CSS properties
 #[derive(Debug, Clone, PartialEq)]
 pub enum Size {
+    /// Constants
+    Zero,
+    
     /// Pixel values
     Px(u32),
     /// Percentage values
@@ -370,6 +373,7 @@ pub enum Size {
 impl fmt::Display for Size {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            Size::Zero => write!(f, "0"),
             Size::Px(val) => write!(f, "{}px", val),
             Size::Percent(val) => write!(f, "{}%", val),
             Size::Em(val) => write!(f, "{}em", val),
