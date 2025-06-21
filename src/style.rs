@@ -222,6 +222,26 @@ impl Style {
         self.add_property(border::border(width, style, color))
     }
 
+    /// Set the border-top property (shorthand)
+    pub fn border_top(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border::border_top(width, style, color))
+    }
+
+    /// Set the border-right property (shorthand)
+    pub fn border_right(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border::border_right(width, style, color))
+    }
+
+    /// Set the border-bottom property (shorthand)
+    pub fn border_bottom(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border::border_bottom(width, style, color))
+    }
+
+    /// Set the border-left property (shorthand)
+    pub fn border_left(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border::border_left(width, style, color))
+    }
+
     /// Set the box-shadow property
     pub fn box_shadow(&mut self, value: BoxShadow) -> &mut Self {
         self.add_property(border::box_shadow(value))

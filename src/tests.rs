@@ -189,6 +189,10 @@ mod tests {
 
             // 16. border
             .border(Size::Px(1), BorderStyle::Solid, Color::Hex("000".to_string()))
+            .border_top(Size::Px(2), BorderStyle::Solid, Color::Red)
+            .border_right(Size::Px(3), BorderStyle::Dashed, Color::Blue)
+            .border_bottom(Size::Px(4), BorderStyle::Dotted, Color::Green)
+            .border_left(Size::Px(5), BorderStyle::Double, Color::Black)
             .border_style(BorderStyle::None)
             .border_style(BorderStyle::Dashed)
             .border_style(BorderStyle::Double)
@@ -372,6 +376,10 @@ mod tests {
 
         // 16. border
         assert!(css.contains("border: 1px solid #000;"));
+        assert!(css.contains("border-top: 2px solid red;"));
+        assert!(css.contains("border-right: 3px dashed blue;"));
+        assert!(css.contains("border-bottom: 4px dotted green;"));
+        assert!(css.contains("border-left: 5px double black;"));
         assert!(css.contains("border-style: none;"));
         assert!(css.contains("border-style: dashed;"));
         assert!(css.contains("border-style: double;"));
