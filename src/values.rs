@@ -1057,15 +1057,53 @@ impl From<crate::variable::CssVar> for FontSize {
 }
 
 /// Align content values for flex and grid containers
+///
+/// The CSS align-content property sets the distribution of space between and around content items
+/// along a flexbox's cross axis, or a grid or block-level element's block axis.
 #[derive(Debug, Clone, PartialEq)]
 pub enum AlignContent {
-    FlexStart,
-    FlexEnd,
+    /// The items are packed in their default position as if no align-content value was set.
+    Normal,
+    /// The items are packed flush to each other against the start edge of the alignment container in the cross axis.
+    Start,
+    /// The items are packed flush to each other in the center of the alignment container along the cross axis.
     Center,
+    /// The items are packed flush to each other against the end edge of the alignment container in the cross axis.
+    End,
+    /// The items are packed flush to each other against the edge of the alignment container depending on the flex container's cross-start side.
+    /// This only applies to flex layout items. For items that are not children of a flex container, this value is treated like start.
+    FlexStart,
+    /// The items are packed flush to each other against the edge of the alignment container depending on the flex container's cross-end side.
+    /// This only applies to flex layout items. For items that are not children of a flex container, this value is treated like end.
+    FlexEnd,
+    /// Specifies participation in first-baseline alignment: aligns the alignment baseline of the box's first baseline set with the corresponding baseline in the shared first baseline set of all the boxes in its baseline-sharing group.
+    Baseline,
+    /// Specifies participation in first-baseline alignment: aligns the alignment baseline of the box's first baseline set with the corresponding baseline in the shared first baseline set of all the boxes in its baseline-sharing group.
+    FirstBaseline,
+    /// Specifies participation in last-baseline alignment: aligns the alignment baseline of the box's last baseline set with the corresponding baseline in the shared last baseline set of all the boxes in its baseline-sharing group.
+    LastBaseline,
+    /// The items are evenly distributed within the alignment container along the cross axis. The spacing between each pair of adjacent items is the same. The first item is flush with the start edge of the alignment container in the cross axis, and the last item is flush with the end edge of the alignment container in the cross axis.
     SpaceBetween,
+    /// The items are evenly distributed within the alignment container along the cross axis. The spacing between each pair of adjacent items is the same. The empty space before the first and after the last item equals half of the space between each pair of adjacent items.
     SpaceAround,
+    /// The items are evenly distributed within the alignment container along the cross axis. The spacing between each pair of adjacent items, the start edge and the first item, and the end edge and the last item, are all exactly the same.
     SpaceEvenly,
+    /// If the combined size of the items along the cross axis is less than the size of the alignment container, any auto-sized items have their size increased equally (not proportionally), while still respecting the constraints imposed by max-height/max-width (or equivalent functionality), so that the combined size exactly fills the alignment container along the cross axis.
     Stretch,
+    /// Used alongside an alignment keyword. If the chosen keyword means that the item overflows the alignment container causing data loss, the item is instead aligned as if the alignment mode were start.
+    SafeCenter,
+    /// Used alongside an alignment keyword. Regardless of the relative sizes of the item and alignment container and whether overflow which causes data loss might happen, the given alignment value is honored.
+    UnsafeCenter,
+    /// Inherits the value from its parent element.
+    Inherit,
+    /// Sets the property to its default value.
+    Initial,
+    /// Reverts the property to the value established by the user-agent stylesheet (or by user styles, if any exist).
+    Revert,
+    /// Reverts the property to the value established for the current cascade layer (if any).
+    RevertLayer,
+    /// Resets the property to its inherited value if it inherits, or to its initial value if not.
+    Unset,
     /// CSS variable
     Var(crate::variable::CssVar),
 }
@@ -1073,13 +1111,26 @@ pub enum AlignContent {
 impl fmt::Display for AlignContent {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            AlignContent::Normal => write!(f, "normal"),
+            AlignContent::Start => write!(f, "start"),
+            AlignContent::Center => write!(f, "center"),
+            AlignContent::End => write!(f, "end"),
             AlignContent::FlexStart => write!(f, "flex-start"),
             AlignContent::FlexEnd => write!(f, "flex-end"),
-            AlignContent::Center => write!(f, "center"),
+            AlignContent::Baseline => write!(f, "baseline"),
+            AlignContent::FirstBaseline => write!(f, "first baseline"),
+            AlignContent::LastBaseline => write!(f, "last baseline"),
             AlignContent::SpaceBetween => write!(f, "space-between"),
             AlignContent::SpaceAround => write!(f, "space-around"),
             AlignContent::SpaceEvenly => write!(f, "space-evenly"),
             AlignContent::Stretch => write!(f, "stretch"),
+            AlignContent::SafeCenter => write!(f, "safe center"),
+            AlignContent::UnsafeCenter => write!(f, "unsafe center"),
+            AlignContent::Inherit => write!(f, "inherit"),
+            AlignContent::Initial => write!(f, "initial"),
+            AlignContent::Revert => write!(f, "revert"),
+            AlignContent::RevertLayer => write!(f, "revert-layer"),
+            AlignContent::Unset => write!(f, "unset"),
             AlignContent::Var(var) => write!(f, "{}", var),
         }
     }
