@@ -1,6 +1,13 @@
 [package]
-name = "mew"
+name = "mew-css"
 version = "0.1.0"
 edition = "2024"
+authors = ["Antharuu <antho.eclips@gmail.com>"]
+description = "A fluent, chainable API for building CSS styles with strong typing in Rust. Mew provides a type-safe way to generate CSS with comprehensive validation, no external dependencies, and an extensible design following SOLID principles."
+repository = "https://github.com/antharuu/mew"
+license = "MIT"
+readme = "README.md"
+keywords = ["css", "styling", "web", "frontend", "design"]
+categories = ["web-programming", "api-bindings", "development-tools"]
 
 [dependencies]
