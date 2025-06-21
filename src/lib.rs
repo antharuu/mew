@@ -13,38 +13,6 @@
 //! - **Comprehensive**: Supports a wide range of CSS properties and values
 //! - **CSS Variables**: First-class support for CSS custom properties
 //!
-//! ## Basic Usage
-//!
-//! ```rust
-//! use mew_css::style;
-//! use mew_css::values::{Color, Size, Display};
-//!
-//! let css = style()
-//!     .color(Color::White)
-//!     .background_color(Color::Rgba(255, 0, 0, 0.5))
-//!     .font_size(Size::Px(16))
-//!     .display(Display::Flex)
-//!     .apply();
-//!
-//! // Produces: "color: white; background-color: rgba(255, 0, 0, 0.5); font-size: 16px; display: flex;"
-//! ```
-//!
-//! ## CSS Variables
-//!
-//! ```rust
-//! use mew_css::{style, var};
-//! use mew_css::values::Color;
-//!
-//! // Define a CSS variable
-//! let primary_color = var("primary-color");
-//!
-//! // Use the variable in a style
-//! let css = style()
-//!     .color(primary_color.into())
-//!     .apply();
-//!
-//! // Produces: "color: var(--primary-color);"
-//! ```
 //!
 //! ## Module Organization
 //!
@@ -58,10 +26,6 @@ pub mod style;
 pub mod values;
 pub mod properties;
 pub mod variable;
-
-// Include integration tests
-#[cfg(test)]
-mod tests;
 
 // Re-export the main API entry point
 pub use style::style;

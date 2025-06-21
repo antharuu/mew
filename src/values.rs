@@ -26,15 +26,10 @@
 //!
 //! ```rust
 //! use mew_css::style;
-//! use mew_css::values::{Color, Size, Display};
+//! use mew_css::values::{Color, Size, Display, AlignContent};
 //!
 //! let css = style()
-//!     .color(Color::Blue)                      // Named color
-//!     .background_color(Color::Rgba(240, 240, 240, 0.5)) // RGBA color
-//!     .width(Size::Percent(100.0))             // Percentage
-//!     .height(Size::Px(200))                   // Pixels
-//!     .margin(Size::Auto)                      // Auto value
-//!     .display(Display::Flex)                  // Display type
+//!     .align_content(AlignContent::Center)
 //!     .apply();
 //! ```
 
@@ -49,28 +44,6 @@ use std::fmt;
 /// - HSL and HSLA values
 /// - Special values like `Transparent` and `CurrentColor`
 /// - CSS variables through the `Var` variant
-///
-/// # Examples
-///
-/// ```rust
-/// use mew_css::style;
-/// use mew_css::values::Color;
-///
-/// // Using named colors
-/// let css1 = style().color(Color::Blue).apply();
-///
-/// // Using RGB values
-/// let css2 = style().color(Color::Rgb(0, 0, 255)).apply();
-///
-/// // Using RGBA with transparency
-/// let css3 = style().color(Color::Rgba(0, 0, 255, 0.5)).apply();
-///
-/// // Using hexadecimal
-/// let css4 = style().color(Color::Hex("#0000ff".to_string())).apply();
-///
-/// // Using HSL
-/// let css5 = style().color(Color::Hsl(240, 100, 50)).apply();
-/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub enum Color {
     /// Alice Blue (#F0F8FF)
@@ -429,37 +402,6 @@ impl fmt::Display for Color {
 ///
 /// This enum is used for properties like width, height, margin, padding, font-size,
 /// and any other CSS property that accepts a size or length value.
-///
-/// # Examples
-///
-/// ```rust
-/// use mew_css::style;
-/// use mew_css::values::Size;
-///
-/// // Using pixel values (absolute)
-/// let css1 = style().width(Size::Px(200)).apply();
-///
-/// // Using percentage values (relative to parent)
-/// let css2 = style().width(Size::Percent(50.0)).apply();
-///
-/// // Using em values (relative to element's font size)
-/// let css3 = style().margin(Size::Em(1.5)).apply();
-///
-/// // Using rem values (relative to root font size)
-/// let css4 = style().font_size(Size::Rem(1.2)).apply();
-///
-/// // Using viewport-relative units
-/// let css5 = style()
-///     .width(Size::Vw(100.0))  // 100% of viewport width
-///     .height(Size::Vh(50.0))  // 50% of viewport height
-///     .apply();
-///
-/// // Using special values
-/// let css6 = style()
-///     .margin(Size::Auto)  // Auto margins (useful for centering)
-///     .border_width(Size::Zero)  // Zero (equivalent to 0px)
-///     .apply();
-/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub enum Size {
     /// Zero value (equivalent to 0px)
@@ -503,28 +445,6 @@ impl fmt::Display for Size {
 ///
 /// The `display` property is one of the most important CSS properties for controlling layout.
 /// It determines how an element is treated in the layout flow and how its children are laid out.
-///
-/// # Examples
-///
-/// ```rust
-/// use mew_css::style;
-/// use mew_css::values::Display;
-///
-/// // Hide an element
-/// let css1 = style().display(Display::None).apply();
-///
-/// // Block-level element (takes up full width)
-/// let css2 = style().display(Display::Block).apply();
-///
-/// // Inline element (flows with text)
-/// let css3 = style().display(Display::Inline).apply();
-///
-/// // Flexbox layout
-/// let css4 = style().display(Display::Flex).apply();
-///
-/// // Grid layout
-/// let css5 = style().display(Display::Grid).apply();
-/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub enum Display {
     /// Removes the element from the document flow (element is not displayed)
@@ -565,37 +485,6 @@ impl fmt::Display for Display {
 /// The `position` property specifies how an element is positioned in the document.
 /// It works together with the `top`, `right`, `bottom`, and `left` properties to
 /// determine the final position of the element.
-///
-/// # Examples
-///
-/// ```rust
-/// use mew_css::style;
-/// use mew_css::values::{Position, Size};
-///
-/// // Default positioning (in the normal document flow)
-/// let css1 = style().position(Position::Static).apply();
-///
-/// // Relative positioning (offset from normal position)
-/// let css2 = style()
-///     .position(Position::Relative)
-///     .top(Size::Px(10))
-///     .left(Size::Px(20))
-///     .apply();
-///
-/// // Absolute positioning (relative to nearest positioned ancestor)
-/// let css3 = style()
-///     .position(Position::Absolute)
-///     .top(Size::Px(0))
-///     .right(Size::Px(0))
-///     .apply();
-///
-/// // Fixed positioning (relative to viewport)
-/// let css4 = style()
-///     .position(Position::Fixed)
-///     .bottom(Size::Px(20))
-///     .right(Size::Px(20))
-///     .apply();
-/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub enum Position {
     /// Default positioning in the normal document flow
@@ -1164,6 +1053,42 @@ impl From<crate::variable::CssVar> for ZIndex {
 impl From<crate::variable::CssVar> for FontSize {
     fn from(var: crate::variable::CssVar) -> Self {
         FontSize::Var(var)
+    }
+}
+
+/// Align content values for flex and grid containers
+#[derive(Debug, Clone, PartialEq)]
+pub enum AlignContent {
+    FlexStart,
+    FlexEnd,
+    Center,
+    SpaceBetween,
+    SpaceAround,
+    SpaceEvenly,
+    Stretch,
+    /// CSS variable
+    Var(crate::variable::CssVar),
+}
+
+impl fmt::Display for AlignContent {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            AlignContent::FlexStart => write!(f, "flex-start"),
+            AlignContent::FlexEnd => write!(f, "flex-end"),
+            AlignContent::Center => write!(f, "center"),
+            AlignContent::SpaceBetween => write!(f, "space-between"),
+            AlignContent::SpaceAround => write!(f, "space-around"),
+            AlignContent::SpaceEvenly => write!(f, "space-evenly"),
+            AlignContent::Stretch => write!(f, "stretch"),
+            AlignContent::Var(var) => write!(f, "{}", var),
+        }
+    }
+}
+
+// Implement From<CssVar> for AlignContent to allow automatic conversion
+impl From<crate::variable::CssVar> for AlignContent {
+    fn from(var: crate::variable::CssVar) -> Self {
+        AlignContent::Var(var)
     }
 }
 

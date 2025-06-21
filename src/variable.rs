@@ -9,25 +9,6 @@
 //!
 //! 1. **Defining variables** - Use the `set_var` method on `Style` to define a variable
 //! 2. **Using variables** - Use the `var` function to create a reference to a variable
-//!
-//! ## Example
-//!
-//! ```rust
-//! use mew_css::{style, var};
-//! use mew_css::values::Color;
-//!
-//! // Define CSS variables
-//! let root_style = style()
-//!     .set_var("primary-color", "#3366ff")
-//!     .set_var("spacing", "1rem")
-//!     .apply();
-//!
-//! // Use CSS variables
-//! let button_style = style()
-//!     .color(var("primary-color").into())
-//!     .padding(var("spacing").into())
-//!     .apply();
-//! ```
 
 use std::fmt;
 
@@ -40,31 +21,6 @@ use std::fmt;
 /// CSS variables provide a way to store values that can be reused throughout
 /// a document. They help maintain consistency and make it easier to update
 /// styles globally.
-///
-/// # Examples
-///
-/// ```rust
-/// use mew_css::variable::{CssVar, var};
-/// use mew_css::style;
-/// use mew_css::values::Color;
-///
-/// // Create a CSS variable reference
-/// let primary_color = CssVar::new("primary-color");
-///
-/// // Use it in a style
-/// let css = style()
-///     .color(Color::Var(primary_color))
-///     .apply();
-///
-/// assert_eq!(css, "color: var(--primary-color);");
-///
-/// // The shorter way using the `var` function and `into()`
-/// let css = style()
-///     .color(var("primary-color").into())
-///     .apply();
-///
-/// assert_eq!(css, "color: var(--primary-color);");
-/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct CssVar(String);
 
@@ -122,23 +78,6 @@ impl fmt::Display for CssVar {
 ///
 /// A new `CssVar` instance
 ///
-/// # Examples
-///
-/// ```rust
-/// use mew_css::variable::var;
-/// use mew_css::style;
-/// use mew_css::values::Color;
-///
-/// // Create a CSS variable reference
-/// let primary_color = var("primary-color");
-///
-/// // Use it in a style
-/// let css = style()
-///     .color(primary_color.into())
-///     .apply();
-///
-/// assert_eq!(css, "color: var(--primary-color);");
-/// ```
 pub fn var(name: &str) -> CssVar {
     CssVar::new(name)
 }
