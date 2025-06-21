@@ -100,3 +100,4 @@ impl fmt::Display for Property {
 pub mod align_content;
 pub mod align_items;
 pub mod background_color;
+pub mod border;
