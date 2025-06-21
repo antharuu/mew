@@ -1,6 +1,6 @@
-use mew::style;
-use mew::values::{Color, Size, Display, FontWeight};
-use mew::variable::var;
+use mew_css::style;
+use mew_css::values::{Color, Size, Display, FontWeight};
+use mew_css::variable::var;
 
 fn main() {
     // Create CSS variables

@@ -5,8 +5,8 @@
 //! # Example
 //!
 //! ```
-//! use mew::style;
-//! use mew::values::{Color, Size, Display};
+//! use mew_css::style;
+//! use mew_css::values::{Color, Size, Display};
 //!
 //! let css = style()
 //!     .color(Color::White)

@@ -24,8 +24,8 @@ mew = "0.1.0"
 ### Basic Example
 
 ```rust
-use mew::style;
-use mew::values::{Color, Size, Display};
+use mew_css::style;
+use mew_css::values::{Color, Size, Display};
 
 fn main() {
     let css = style()
@@ -43,8 +43,8 @@ fn main() {
 ### Complex Example
 
 ```rust
-use mew::style;
-use mew::values::{Color, Size, Display, FlexDirection, JustifyContent, AlignItems};
+use mew_css::style;
+use mew_css::values::{Color, Size, Display, FlexDirection, JustifyContent, AlignItems};
 
 fn main() {
     let css = style()
@@ -70,8 +70,8 @@ fn main() {
 ### CSS Variables
 
 ```rust
-use mew::{style, var};
-use mew::values::{Color};
+use mew_css::{style, var};
+use mew_css::values::{Color};
 
 fn main() {
     let css = style()

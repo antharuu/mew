@@ -51,8 +51,8 @@ mod tests {
 The library includes a basic example in the `examples` directory:
 
 ```rust
-use mew::style;
-use mew::values::{Color, Size, Display};
+use mew_css::style;
+use mew_css::values::{Color, Size, Display};
 
 fn main() {
     let css = style()

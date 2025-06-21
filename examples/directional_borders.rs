@@ -1,5 +1,5 @@
-use mew::style;
-use mew::values::{Color, Size, BorderStyle};
+use mew_css::style;
+use mew_css::values::{Color, Size, BorderStyle};
 
 fn main() {
     // Create a style with directional border properties
@@ -9,7 +9,7 @@ fn main() {
         .border_bottom(Size::Px(3), BorderStyle::Dotted, Color::Green)
         .border_left(Size::Px(4), BorderStyle::Double, Color::Black)
         .apply();
-    
+
     println!("Generated CSS with directional borders:");
     println!("{}", css);
 }
