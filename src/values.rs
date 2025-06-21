@@ -564,14 +564,55 @@ impl fmt::Display for JustifyContent {
     }
 }
 
-/// Align items values
+/// Align items values for flex and grid containers
+///
+/// The CSS align-items property sets the align-self value on all direct children as a group.
+/// In flexbox, it controls the alignment of items on the cross axis.
+/// In grid layout, it controls the alignment of items on the block axis within their grid areas.
 #[derive(Debug, Clone, PartialEq)]
 pub enum AlignItems {
-    FlexStart,
-    FlexEnd,
+    /// The effect of this keyword is dependent of the layout mode
+    Normal,
+    /// If the cross-size of an item is larger than the flex container, it will overflow equally in both directions
     Center,
+    /// The items are packed flush to each other toward the start edge of the alignment container
+    Start,
+    /// The items are packed flush to each other toward the end edge of the alignment container
+    End,
+    /// Used in flex layout, aligns the flex items flush against the flex container's cross-start side
+    FlexStart,
+    /// Used in flex layout, aligns the flex items flush against the flex container's cross-end side
+    FlexEnd,
+    /// The items are packed flush to the edge of the alignment container's start side of the item
+    SelfStart,
+    /// The items are packed flush to the edge of the alignment container's end side of the item
+    SelfEnd,
+    /// All flex items are aligned such that their baselines align
     Baseline,
+    /// Same as baseline
+    FirstBaseline,
+    /// Aligns the items to their last baseline
+    LastBaseline,
+    /// Auto-sized items will be equally enlarged to fill the container
     Stretch,
+    /// Aligns the items to the center of the associated anchor element in the block direction
+    AnchorCenter,
+    /// If the chosen keyword means that the item overflows the alignment container causing data loss,
+    /// the item is instead aligned as if the alignment mode were start
+    SafeCenter,
+    /// Regardless of the relative sizes of the item and alignment container and whether overflow
+    /// which causes data loss might happen, the given alignment value is honored
+    UnsafeCenter,
+    /// Inherits the value from its parent element
+    Inherit,
+    /// Sets the property to its default value
+    Initial,
+    /// Reverts the property to the value established by the user-agent stylesheet
+    Revert,
+    /// Reverts to the value established for the element in a previous cascade layer
+    RevertLayer,
+    /// Resets the property to its inherited value if it inherits, or to its initial value if not
+    Unset,
     /// CSS variable
     Var(crate::variable::CssVar),
 }
@@ -579,11 +620,26 @@ pub enum AlignItems {
 impl fmt::Display for AlignItems {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            AlignItems::Normal => write!(f, "normal"),
+            AlignItems::Center => write!(f, "center"),
+            AlignItems::Start => write!(f, "start"),
+            AlignItems::End => write!(f, "end"),
             AlignItems::FlexStart => write!(f, "flex-start"),
             AlignItems::FlexEnd => write!(f, "flex-end"),
-            AlignItems::Center => write!(f, "center"),
+            AlignItems::SelfStart => write!(f, "self-start"),
+            AlignItems::SelfEnd => write!(f, "self-end"),
             AlignItems::Baseline => write!(f, "baseline"),
+            AlignItems::FirstBaseline => write!(f, "first baseline"),
+            AlignItems::LastBaseline => write!(f, "last baseline"),
             AlignItems::Stretch => write!(f, "stretch"),
+            AlignItems::AnchorCenter => write!(f, "anchor-center"),
+            AlignItems::SafeCenter => write!(f, "safe center"),
+            AlignItems::UnsafeCenter => write!(f, "unsafe center"),
+            AlignItems::Inherit => write!(f, "inherit"),
+            AlignItems::Initial => write!(f, "initial"),
+            AlignItems::Revert => write!(f, "revert"),
+            AlignItems::RevertLayer => write!(f, "revert-layer"),
+            AlignItems::Unset => write!(f, "unset"),
             AlignItems::Var(var) => write!(f, "{}", var),
         }
     }

@@ -8,6 +8,7 @@
 //! The properties are organized into individual files, one for each property:
 //!
 //! - `align_content`: Align content property for flex and grid containers
+//! - `align_items`: Align items property for flex and grid containers
 //!
 //! ## Usage
 //!
@@ -97,3 +98,4 @@ impl fmt::Display for Property {
 
 // Export property modules
 pub mod align_content;
+pub mod align_items;

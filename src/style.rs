@@ -46,7 +46,7 @@
 //!     .apply();
 //! ```
 
-use crate::properties::{Property, align_content};
+use crate::properties::{Property, align_content, align_items};
 use crate::values::*;
 use std::fmt;
 
@@ -291,6 +291,36 @@ impl Style {
     pub fn align_content(&mut self, value: AlignContent) -> &mut Self {
         self.add_property(align_content::align_content(value))
     }
+
+    /// Sets the align-items property for flex and grid containers.
+    ///
+    /// The `align-items` property sets the align-self value on all direct children as a group.
+    /// In flexbox, it controls the alignment of items on the cross axis.
+    /// In grid layout, it controls the alignment of items on the block axis within their grid areas.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The align-items value to set
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::AlignItems;
+    ///
+    /// let css = style().align_items(AlignItems::Center).apply();
+    /// assert_eq!(css, "align-items: center;");
+    ///
+    /// let css = style().align_items(AlignItems::Stretch).apply();
+    /// assert_eq!(css, "align-items: stretch;");
+    /// ```
+    pub fn align_items(&mut self, value: AlignItems) -> &mut Self {
+        self.add_property(align_items::align_items(value))
+    }
 }
 
 impl fmt::Display for Style {
@@ -362,6 +392,36 @@ mod tests {
         assert_eq!(
             css,
             "animation-name: fade-in; animation-duration: 2s;"
+        );
+    }
+
+    #[test]
+    fn test_align_items() {
+        let css = style()
+            .align_items(AlignItems::Center)
+            .apply();
+
+        assert_eq!(
+            css,
+            "align-items: center;"
+        );
+
+        let css = style()
+            .align_items(AlignItems::Stretch)
+            .apply();
+
+        assert_eq!(
+            css,
+            "align-items: stretch;"
+        );
+
+        let css = style()
+            .align_items(AlignItems::FlexStart)
+            .apply();
+
+        assert_eq!(
+            css,
+            "align-items: flex-start;"
         );
     }
 }
