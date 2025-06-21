@@ -46,7 +46,7 @@
 //!     .apply();
 //! ```
 
-use crate::properties::{Property, align_content, align_items};
+use crate::properties::{Property, align_content, align_items, background_color};
 use crate::values::*;
 use std::fmt;
 
@@ -321,6 +321,40 @@ impl Style {
     pub fn align_items(&mut self, value: AlignItems) -> &mut Self {
         self.add_property(align_items::align_items(value))
     }
+
+    /// Sets the background-color property of an element.
+    ///
+    /// The `background-color` property sets the background color of an element.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The color value to set
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::Color;
+    ///
+    /// // Named color
+    /// let css = style().background_color(Color::Red).apply();
+    /// assert_eq!(css, "background-color: red;");
+    ///
+    /// // RGB color
+    /// let css = style().background_color(Color::Rgb(255, 0, 0)).apply();
+    /// assert_eq!(css, "background-color: rgb(255, 0, 0);");
+    ///
+    /// // RGBA color (with transparency)
+    /// let css = style().background_color(Color::Rgba(255, 0, 0, 0.5)).apply();
+    /// assert_eq!(css, "background-color: rgba(255, 0, 0, 0.5);");
+    /// ```
+    pub fn background_color(&mut self, value: Color) -> &mut Self {
+        self.add_property(background_color::background_color(value))
+    }
 }
 
 impl fmt::Display for Style {
@@ -422,6 +456,49 @@ mod tests {
         assert_eq!(
             css,
             "align-items: flex-start;"
+        );
+    }
+
+    #[test]
+    fn test_background_color() {
+        // Named color
+        let css = style()
+            .background_color(Color::Red)
+            .apply();
+
+        assert_eq!(
+            css,
+            "background-color: red;"
+        );
+
+        // RGB color
+        let css = style()
+            .background_color(Color::Rgb(255, 0, 0))
+            .apply();
+
+        assert_eq!(
+            css,
+            "background-color: rgb(255, 0, 0);"
+        );
+
+        // RGBA color
+        let css = style()
+            .background_color(Color::Rgba(255, 0, 0, 0.5))
+            .apply();
+
+        assert_eq!(
+            css,
+            "background-color: rgba(255, 0, 0, 0.5);"
+        );
+
+        // Hex color
+        let css = style()
+            .background_color(Color::Hex("#ff0000".to_string()))
+            .apply();
+
+        assert_eq!(
+            css,
+            "background-color: #ff0000;"
         );
     }
 }
