@@ -36,6 +36,22 @@ impl Style {
         self.apply()
     }
 
+    /// Add a custom property. This allows using raw property names and values
+    /// such as CSS variables.
+    pub fn custom_property<T: fmt::Display>(&mut self, name: &str, value: T) -> &mut Self {
+        self.add_property(Property::new(name, value))
+    }
+
+    /// Define a CSS variable (custom property).
+    pub fn set_var<T: fmt::Display>(&mut self, name: &str, value: T) -> &mut Self {
+        let var_name = if name.trim().starts_with("--") {
+            name.trim().to_string()
+        } else {
+            format!("--{}", name.trim())
+        };
+        self.custom_property(&var_name, value)
+    }
+
     // Color properties
 
     /// Set the color property
@@ -204,6 +220,26 @@ impl Style {
     /// Set the border property (shorthand)
     pub fn border(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
         self.add_property(border::border(width, style, color))
+    }
+
+    /// Set the border-top property (shorthand)
+    pub fn border_top(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border::border_top(width, style, color))
+    }
+
+    /// Set the border-right property (shorthand)
+    pub fn border_right(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border::border_right(width, style, color))
+    }
+
+    /// Set the border-bottom property (shorthand)
+    pub fn border_bottom(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border::border_bottom(width, style, color))
+    }
+
+    /// Set the border-left property (shorthand)
+    pub fn border_left(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border::border_left(width, style, color))
     }
 
     /// Set the box-shadow property

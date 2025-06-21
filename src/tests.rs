@@ -3,6 +3,7 @@
 #[cfg(test)]
 mod tests {
     use crate::style;
+    use crate::variable::var;
     use crate::values::{
         AlignItems, BorderStyle, BoxShadow, Color, Cursor, Display, FlexDirection, FontSize,
         FontWeight, JustifyContent, LineHeight, Overflow, Position, Size, TextAlign, TextDecoration,
@@ -188,6 +189,10 @@ mod tests {
 
             // 16. border
             .border(Size::Px(1), BorderStyle::Solid, Color::Hex("000".to_string()))
+            .border_top(Size::Px(2), BorderStyle::Solid, Color::Red)
+            .border_right(Size::Px(3), BorderStyle::Dashed, Color::Blue)
+            .border_bottom(Size::Px(4), BorderStyle::Dotted, Color::Green)
+            .border_left(Size::Px(5), BorderStyle::Double, Color::Black)
             .border_style(BorderStyle::None)
             .border_style(BorderStyle::Dashed)
             .border_style(BorderStyle::Double)
@@ -371,6 +376,10 @@ mod tests {
 
         // 16. border
         assert!(css.contains("border: 1px solid #000;"));
+        assert!(css.contains("border-top: 2px solid red;"));
+        assert!(css.contains("border-right: 3px dashed blue;"));
+        assert!(css.contains("border-bottom: 4px dotted green;"));
+        assert!(css.contains("border-left: 5px double black;"));
         assert!(css.contains("border-style: none;"));
         assert!(css.contains("border-style: dashed;"));
         assert!(css.contains("border-style: double;"));
@@ -455,5 +464,16 @@ mod tests {
         assert!(css.contains("visibility: visible;"));
         assert!(css.contains("visibility: hidden;"));
         assert!(css.contains("visibility: collapse;"));
+    }
+
+    #[test]
+    fn test_css_variables() {
+        let css = style()
+            .set_var("primary", Color::Blue)
+            .custom_property("color", var("primary"))
+            .apply();
+
+        assert!(css.contains("--primary: blue;"));
+        assert!(css.contains("color: var(--primary);"));
     }
 }

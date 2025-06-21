@@ -212,6 +212,26 @@ pub mod border {
         Property::new("border", format!("{} {} {}", width, style, color))
     }
 
+    /// Create a border-top property (shorthand)
+    pub fn border_top(width: Size, style: BorderStyle, color: Color) -> Property {
+        Property::new("border-top", format!("{} {} {}", width, style, color))
+    }
+
+    /// Create a border-right property (shorthand)
+    pub fn border_right(width: Size, style: BorderStyle, color: Color) -> Property {
+        Property::new("border-right", format!("{} {} {}", width, style, color))
+    }
+
+    /// Create a border-bottom property (shorthand)
+    pub fn border_bottom(width: Size, style: BorderStyle, color: Color) -> Property {
+        Property::new("border-bottom", format!("{} {} {}", width, style, color))
+    }
+
+    /// Create a border-left property (shorthand)
+    pub fn border_left(width: Size, style: BorderStyle, color: Color) -> Property {
+        Property::new("border-left", format!("{} {} {}", width, style, color))
+    }
+
     /// Create a box-shadow property
     pub fn box_shadow(value: BoxShadow) -> Property {
         Property::new("box-shadow", value)
