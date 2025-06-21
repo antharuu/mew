@@ -46,7 +46,7 @@
 //!     .apply();
 //! ```
 
-use crate::properties::{Property, align_content, align_items, background_color, border};
+use crate::properties::{Property, align_content, align_items, background_color, border, border_bottom, border_top, border_left, border_right};
 use crate::values::*;
 use std::fmt;
 
@@ -475,6 +475,486 @@ impl Style {
     pub fn border_with_width_and_color(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
         self.add_property(border::border_with_width_and_color(width, style, color))
     }
+
+    /// Sets the border-bottom property of an element with only style.
+    ///
+    /// The `border-bottom` property is a shorthand property that sets the border-bottom-width, border-bottom-style, and border-bottom-color.
+    /// This method sets only the border-bottom style.
+    ///
+    /// # Arguments
+    ///
+    /// * `style` - The border-bottom style to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::BorderStyle;
+    ///
+    /// let css = style().border_bottom(BorderStyle::Solid).apply();
+    /// assert_eq!(css, "border-bottom: solid;");
+    ///
+    /// let css = style().border_bottom(BorderStyle::Dashed).apply();
+    /// assert_eq!(css, "border-bottom: dashed;");
+    /// ```
+    pub fn border_bottom(&mut self, style: BorderStyle) -> &mut Self {
+        self.add_property(border_bottom::border_bottom(style))
+    }
+
+    /// Sets the border-bottom property of an element with width and style.
+    ///
+    /// The `border-bottom` property is a shorthand property that sets the border-bottom-width, border-bottom-style, and border-bottom-color.
+    /// This method sets the border-bottom width and style.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The border-bottom width to use
+    /// * `style` - The border-bottom style to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Size};
+    ///
+    /// let css = style().border_bottom_with_width(Size::Px(2), BorderStyle::Dotted).apply();
+    /// assert_eq!(css, "border-bottom: 2px dotted;");
+    ///
+    /// let css = style().border_bottom_with_width(Size::Rem(1.5), BorderStyle::Solid).apply();
+    /// assert_eq!(css, "border-bottom: 1.5rem solid;");
+    /// ```
+    pub fn border_bottom_with_width(&mut self, width: Size, style: BorderStyle) -> &mut Self {
+        self.add_property(border_bottom::border_bottom_with_width(width, style))
+    }
+
+    /// Sets the border-bottom property of an element with style and color.
+    ///
+    /// The `border-bottom` property is a shorthand property that sets the border-bottom-width, border-bottom-style, and border-bottom-color.
+    /// This method sets the border-bottom style and color.
+    ///
+    /// # Arguments
+    ///
+    /// * `style` - The border-bottom style to use
+    /// * `color` - The border-bottom color to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Color};
+    ///
+    /// let css = style().border_bottom_with_color(BorderStyle::Outset, Color::Hex("#f33".to_string())).apply();
+    /// assert_eq!(css, "border-bottom: outset #f33;");
+    ///
+    /// let css = style().border_bottom_with_color(BorderStyle::Solid, Color::Red).apply();
+    /// assert_eq!(css, "border-bottom: solid red;");
+    /// ```
+    pub fn border_bottom_with_color(&mut self, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border_bottom::border_bottom_with_color(style, color))
+    }
+
+    /// Sets the border-bottom property of an element with width, style, and color.
+    ///
+    /// The `border-bottom` property is a shorthand property that sets the border-bottom-width, border-bottom-style, and border-bottom-color.
+    /// This method sets all three properties.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The border-bottom width to use
+    /// * `style` - The border-bottom style to use
+    /// * `color` - The border-bottom color to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Color, Size};
+    ///
+    /// let css = style().border_bottom_with_width_and_color(Size::Px(3), BorderStyle::Dashed, Color::Green).apply();
+    /// assert_eq!(css, "border-bottom: 3px dashed green;");
+    ///
+    /// let css = style().border_bottom_with_width_and_color(Size::Px(4), BorderStyle::Double, Color::Rgb(50, 161, 206)).apply();
+    /// assert_eq!(css, "border-bottom: 4px double rgb(50, 161, 206);");
+    /// ```
+    pub fn border_bottom_with_width_and_color(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border_bottom::border_bottom_with_width_and_color(width, style, color))
+    }
+
+    /// Sets the border-top property of an element with only style.
+    ///
+    /// The `border-top` property is a shorthand property that sets the border-top-width, border-top-style, and border-top-color.
+    /// This method sets only the border-top style.
+    ///
+    /// # Arguments
+    ///
+    /// * `style` - The border-top style to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::BorderStyle;
+    ///
+    /// let css = style().border_top(BorderStyle::Solid).apply();
+    /// assert_eq!(css, "border-top: solid;");
+    ///
+    /// let css = style().border_top(BorderStyle::Dashed).apply();
+    /// assert_eq!(css, "border-top: dashed;");
+    /// ```
+    pub fn border_top(&mut self, style: BorderStyle) -> &mut Self {
+        self.add_property(border_top::border_top(style))
+    }
+
+    /// Sets the border-top property of an element with width and style.
+    ///
+    /// The `border-top` property is a shorthand property that sets the border-top-width, border-top-style, and border-top-color.
+    /// This method sets the border-top width and style.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The border-top width to use
+    /// * `style` - The border-top style to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Size};
+    ///
+    /// let css = style().border_top_with_width(Size::Px(2), BorderStyle::Dotted).apply();
+    /// assert_eq!(css, "border-top: 2px dotted;");
+    ///
+    /// let css = style().border_top_with_width(Size::Rem(1.5), BorderStyle::Solid).apply();
+    /// assert_eq!(css, "border-top: 1.5rem solid;");
+    /// ```
+    pub fn border_top_with_width(&mut self, width: Size, style: BorderStyle) -> &mut Self {
+        self.add_property(border_top::border_top_with_width(width, style))
+    }
+
+    /// Sets the border-top property of an element with style and color.
+    ///
+    /// The `border-top` property is a shorthand property that sets the border-top-width, border-top-style, and border-top-color.
+    /// This method sets the border-top style and color.
+    ///
+    /// # Arguments
+    ///
+    /// * `style` - The border-top style to use
+    /// * `color` - The border-top color to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Color};
+    ///
+    /// let css = style().border_top_with_color(BorderStyle::Outset, Color::Hex("#f33".to_string())).apply();
+    /// assert_eq!(css, "border-top: outset #f33;");
+    ///
+    /// let css = style().border_top_with_color(BorderStyle::Solid, Color::Red).apply();
+    /// assert_eq!(css, "border-top: solid red;");
+    /// ```
+    pub fn border_top_with_color(&mut self, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border_top::border_top_with_color(style, color))
+    }
+
+    /// Sets the border-top property of an element with width, style, and color.
+    ///
+    /// The `border-top` property is a shorthand property that sets the border-top-width, border-top-style, and border-top-color.
+    /// This method sets all three properties.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The border-top width to use
+    /// * `style` - The border-top style to use
+    /// * `color` - The border-top color to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Color, Size};
+    ///
+    /// let css = style().border_top_with_width_and_color(Size::Px(3), BorderStyle::Dashed, Color::Green).apply();
+    /// assert_eq!(css, "border-top: 3px dashed green;");
+    ///
+    /// let css = style().border_top_with_width_and_color(Size::Px(4), BorderStyle::Double, Color::Rgb(50, 161, 206)).apply();
+    /// assert_eq!(css, "border-top: 4px double rgb(50, 161, 206);");
+    /// ```
+    pub fn border_top_with_width_and_color(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border_top::border_top_with_width_and_color(width, style, color))
+    }
+
+    /// Sets the border-left property of an element with only style.
+    ///
+    /// The `border-left` property is a shorthand property that sets the border-left-width, border-left-style, and border-left-color.
+    /// This method sets only the border-left style.
+    ///
+    /// # Arguments
+    ///
+    /// * `style` - The border-left style to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::BorderStyle;
+    ///
+    /// let css = style().border_left(BorderStyle::Solid).apply();
+    /// assert_eq!(css, "border-left: solid;");
+    ///
+    /// let css = style().border_left(BorderStyle::Dashed).apply();
+    /// assert_eq!(css, "border-left: dashed;");
+    /// ```
+    pub fn border_left(&mut self, style: BorderStyle) -> &mut Self {
+        self.add_property(border_left::border_left(style))
+    }
+
+    /// Sets the border-left property of an element with width and style.
+    ///
+    /// The `border-left` property is a shorthand property that sets the border-left-width, border-left-style, and border-left-color.
+    /// This method sets the border-left width and style.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The border-left width to use
+    /// * `style` - The border-left style to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Size};
+    ///
+    /// let css = style().border_left_with_width(Size::Px(2), BorderStyle::Dotted).apply();
+    /// assert_eq!(css, "border-left: 2px dotted;");
+    ///
+    /// let css = style().border_left_with_width(Size::Rem(1.5), BorderStyle::Solid).apply();
+    /// assert_eq!(css, "border-left: 1.5rem solid;");
+    /// ```
+    pub fn border_left_with_width(&mut self, width: Size, style: BorderStyle) -> &mut Self {
+        self.add_property(border_left::border_left_with_width(width, style))
+    }
+
+    /// Sets the border-left property of an element with style and color.
+    ///
+    /// The `border-left` property is a shorthand property that sets the border-left-width, border-left-style, and border-left-color.
+    /// This method sets the border-left style and color.
+    ///
+    /// # Arguments
+    ///
+    /// * `style` - The border-left style to use
+    /// * `color` - The border-left color to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Color};
+    ///
+    /// let css = style().border_left_with_color(BorderStyle::Outset, Color::Hex("#f33".to_string())).apply();
+    /// assert_eq!(css, "border-left: outset #f33;");
+    ///
+    /// let css = style().border_left_with_color(BorderStyle::Solid, Color::Red).apply();
+    /// assert_eq!(css, "border-left: solid red;");
+    /// ```
+    pub fn border_left_with_color(&mut self, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border_left::border_left_with_color(style, color))
+    }
+
+    /// Sets the border-left property of an element with width, style, and color.
+    ///
+    /// The `border-left` property is a shorthand property that sets the border-left-width, border-left-style, and border-left-color.
+    /// This method sets all three properties.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The border-left width to use
+    /// * `style` - The border-left style to use
+    /// * `color` - The border-left color to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Color, Size};
+    ///
+    /// let css = style().border_left_with_width_and_color(Size::Px(3), BorderStyle::Dashed, Color::Green).apply();
+    /// assert_eq!(css, "border-left: 3px dashed green;");
+    ///
+    /// let css = style().border_left_with_width_and_color(Size::Px(4), BorderStyle::Double, Color::Rgb(50, 161, 206)).apply();
+    /// assert_eq!(css, "border-left: 4px double rgb(50, 161, 206);");
+    /// ```
+    pub fn border_left_with_width_and_color(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border_left::border_left_with_width_and_color(width, style, color))
+    }
+
+    /// Sets the border-right property of an element with only style.
+    ///
+    /// The `border-right` property is a shorthand property that sets the border-right-width, border-right-style, and border-right-color.
+    /// This method sets only the border-right style.
+    ///
+    /// # Arguments
+    ///
+    /// * `style` - The border-right style to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::BorderStyle;
+    ///
+    /// let css = style().border_right(BorderStyle::Solid).apply();
+    /// assert_eq!(css, "border-right: solid;");
+    ///
+    /// let css = style().border_right(BorderStyle::Dashed).apply();
+    /// assert_eq!(css, "border-right: dashed;");
+    /// ```
+    pub fn border_right(&mut self, style: BorderStyle) -> &mut Self {
+        self.add_property(border_right::border_right(style))
+    }
+
+    /// Sets the border-right property of an element with width and style.
+    ///
+    /// The `border-right` property is a shorthand property that sets the border-right-width, border-right-style, and border-right-color.
+    /// This method sets the border-right width and style.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The border-right width to use
+    /// * `style` - The border-right style to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Size};
+    ///
+    /// let css = style().border_right_with_width(Size::Px(2), BorderStyle::Dotted).apply();
+    /// assert_eq!(css, "border-right: 2px dotted;");
+    ///
+    /// let css = style().border_right_with_width(Size::Rem(1.5), BorderStyle::Solid).apply();
+    /// assert_eq!(css, "border-right: 1.5rem solid;");
+    /// ```
+    pub fn border_right_with_width(&mut self, width: Size, style: BorderStyle) -> &mut Self {
+        self.add_property(border_right::border_right_with_width(width, style))
+    }
+
+    /// Sets the border-right property of an element with style and color.
+    ///
+    /// The `border-right` property is a shorthand property that sets the border-right-width, border-right-style, and border-right-color.
+    /// This method sets the border-right style and color.
+    ///
+    /// # Arguments
+    ///
+    /// * `style` - The border-right style to use
+    /// * `color` - The border-right color to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Color};
+    ///
+    /// let css = style().border_right_with_color(BorderStyle::Outset, Color::Hex("#f33".to_string())).apply();
+    /// assert_eq!(css, "border-right: outset #f33;");
+    ///
+    /// let css = style().border_right_with_color(BorderStyle::Solid, Color::Red).apply();
+    /// assert_eq!(css, "border-right: solid red;");
+    /// ```
+    pub fn border_right_with_color(&mut self, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border_right::border_right_with_color(style, color))
+    }
+
+    /// Sets the border-right property of an element with width, style, and color.
+    ///
+    /// The `border-right` property is a shorthand property that sets the border-right-width, border-right-style, and border-right-color.
+    /// This method sets all three properties.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The border-right width to use
+    /// * `style` - The border-right style to use
+    /// * `color` - The border-right color to use
+    ///
+    /// # Returns
+    ///
+    /// A mutable reference to self for method chaining
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::style;
+    /// use mew_css::values::{BorderStyle, Color, Size};
+    ///
+    /// let css = style().border_right_with_width_and_color(Size::Px(3), BorderStyle::Dashed, Color::Green).apply();
+    /// assert_eq!(css, "border-right: 3px dashed green;");
+    ///
+    /// let css = style().border_right_with_width_and_color(Size::Px(4), BorderStyle::Double, Color::Rgb(50, 161, 206)).apply();
+    /// assert_eq!(css, "border-right: 4px double rgb(50, 161, 206);");
+    /// ```
+    pub fn border_right_with_width_and_color(&mut self, width: Size, style: BorderStyle, color: Color) -> &mut Self {
+        self.add_property(border_right::border_right_with_width_and_color(width, style, color))
+    }
 }
 
 impl fmt::Display for Style {
@@ -662,6 +1142,178 @@ mod tests {
         assert_eq!(
             css,
             "border: 3px dashed green;"
+        );
+    }
+
+    #[test]
+    fn test_border_bottom() {
+        // Style only
+        let css = style()
+            .border_bottom(BorderStyle::Solid)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-bottom: solid;"
+        );
+
+        // Width and style
+        let css = style()
+            .border_bottom_with_width(Size::Px(2), BorderStyle::Dotted)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-bottom: 2px dotted;"
+        );
+
+        // Style and color
+        let css = style()
+            .border_bottom_with_color(BorderStyle::Outset, Color::Hex("#f33".to_string()))
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-bottom: outset #f33;"
+        );
+
+        // Width, style, and color
+        let css = style()
+            .border_bottom_with_width_and_color(Size::Px(3), BorderStyle::Dashed, Color::Green)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-bottom: 3px dashed green;"
+        );
+    }
+
+    #[test]
+    fn test_border_top() {
+        // Style only
+        let css = style()
+            .border_top(BorderStyle::Solid)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-top: solid;"
+        );
+
+        // Width and style
+        let css = style()
+            .border_top_with_width(Size::Px(2), BorderStyle::Dotted)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-top: 2px dotted;"
+        );
+
+        // Style and color
+        let css = style()
+            .border_top_with_color(BorderStyle::Outset, Color::Hex("#f33".to_string()))
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-top: outset #f33;"
+        );
+
+        // Width, style, and color
+        let css = style()
+            .border_top_with_width_and_color(Size::Px(3), BorderStyle::Dashed, Color::Green)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-top: 3px dashed green;"
+        );
+    }
+
+    #[test]
+    fn test_border_left() {
+        // Style only
+        let css = style()
+            .border_left(BorderStyle::Solid)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-left: solid;"
+        );
+
+        // Width and style
+        let css = style()
+            .border_left_with_width(Size::Px(2), BorderStyle::Dotted)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-left: 2px dotted;"
+        );
+
+        // Style and color
+        let css = style()
+            .border_left_with_color(BorderStyle::Outset, Color::Hex("#f33".to_string()))
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-left: outset #f33;"
+        );
+
+        // Width, style, and color
+        let css = style()
+            .border_left_with_width_and_color(Size::Px(3), BorderStyle::Dashed, Color::Green)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-left: 3px dashed green;"
+        );
+    }
+
+    #[test]
+    fn test_border_right() {
+        // Style only
+        let css = style()
+            .border_right(BorderStyle::Solid)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-right: solid;"
+        );
+
+        // Width and style
+        let css = style()
+            .border_right_with_width(Size::Px(2), BorderStyle::Dotted)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-right: 2px dotted;"
+        );
+
+        // Style and color
+        let css = style()
+            .border_right_with_color(BorderStyle::Outset, Color::Hex("#f33".to_string()))
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-right: outset #f33;"
+        );
+
+        // Width, style, and color
+        let css = style()
+            .border_right_with_width_and_color(Size::Px(3), BorderStyle::Dashed, Color::Green)
+            .apply();
+
+        assert_eq!(
+            css,
+            "border-right: 3px dashed green;"
         );
     }
 }

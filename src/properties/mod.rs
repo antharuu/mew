@@ -101,3 +101,7 @@ pub mod align_content;
 pub mod align_items;
 pub mod background_color;
 pub mod border;
+pub mod border_bottom;
+pub mod border_top;
+pub mod border_left;
+pub mod border_right;
