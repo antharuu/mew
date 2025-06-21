@@ -1,19 +1,96 @@
-//! CSS properties module
+//! # CSS Properties Module
 //!
-//! This module defines the CSS properties that can be set on a style.
+//! This module defines the CSS properties that can be set on a style. It provides
+//! a structured way to create and manage CSS properties with type safety.
+//!
+//! ## Module Organization
+//!
+//! The properties are organized into submodules by category:
+//!
+//! - `color`: Color-related properties (color, background-color)
+//! - `size`: Size-related properties (width, height, margin, padding)
+//! - `display`: Display and positioning properties
+//! - `font`: Typography-related properties
+//! - `border`: Border and outline properties
+//! - `position`: Positioning properties (top, right, bottom, left)
+//! - `layout`: General layout properties (overflow, visibility)
+//! - `flex`: Flexbox-specific properties
+//! - `grid`: Grid-specific properties
+//! - `transition`: Transition and animation properties
+//!
+//! ## Usage
+//!
+//! While you can use this module directly to create properties, it's generally
+//! easier to use the methods on the `Style` struct, which will call these
+//! functions for you.
+//!
+//! ```rust
+//! use mew_css::properties::{Property, color};
+//! use mew_css::values::Color;
+//!
+//! // Direct usage
+//! let property = color::color(Color::Blue);
+//!
+//! // More commonly, through the Style API
+//! use mew_css::style;
+//! let css = style().color(Color::Blue).apply();
+//! ```
 
 use crate::values::*;
 use std::fmt;
 
-/// A CSS property with a name and value
+/// Represents a single CSS property with a name and value.
+///
+/// A `Property` is the fundamental building block of CSS styles in this library.
+/// Each property has a name (like "color" or "margin-top") and a value that has
+/// been converted to a string representation.
+///
+/// Properties are typically created using the functions in the submodules of this
+/// module, rather than being constructed directly.
+///
+/// # Examples
+///
+/// ```rust
+/// use mew_css::properties::Property;
+///
+/// // Create a property directly
+/// let color_prop = Property::new("color", "blue");
+/// let font_size_prop = Property::new("font-size", "16px");
+///
+/// // The string representation includes the semicolon
+/// assert_eq!(color_prop.to_string(), "color: blue;");
+/// ```
 #[derive(Debug, Clone)]
 pub struct Property {
+    /// The CSS property name (e.g., "color", "margin-top")
     name: String,
+    /// The CSS property value as a string (e.g., "blue", "20px")
     value: String,
 }
 
 impl Property {
-    /// Create a new property with the given name and value
+    /// Creates a new CSS property with the given name and value.
+    ///
+    /// This method converts the value to a string using the `Display` trait.
+    ///
+    /// # Arguments
+    ///
+    /// * `name` - The CSS property name
+    /// * `value` - The property value, which can be any type that implements `Display`
+    ///
+    /// # Returns
+    ///
+    /// A new `Property` instance
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::properties::Property;
+    ///
+    /// let color_prop = Property::new("color", "blue");
+    /// let margin_prop = Property::new("margin", "10px");
+    /// let opacity_prop = Property::new("opacity", 0.5);
+    /// ```
     pub fn new<T: fmt::Display>(name: &str, value: T) -> Self {
         Self {
             name: name.to_string(),
@@ -28,21 +105,92 @@ impl fmt::Display for Property {
     }
 }
 
-/// Color properties
+/// Color-related CSS properties.
+///
+/// This module provides functions for creating color-related CSS properties
+/// such as text color, background color, and border color.
 pub mod color {
     use super::*;
 
-    /// Create a color property
+    /// Creates a CSS `color` property for setting text color.
+    ///
+    /// The `color` property sets the color of text content and text decorations.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The color value to use
+    ///
+    /// # Returns
+    ///
+    /// A new `Property` instance representing the color property
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::properties::color;
+    /// use mew_css::values::Color;
+    ///
+    /// let prop = color::color(Color::Blue);
+    /// assert_eq!(prop.to_string(), "color: blue;");
+    ///
+    /// let prop = color::color(Color::Rgb(255, 0, 0));
+    /// assert_eq!(prop.to_string(), "color: rgb(255, 0, 0);");
+    /// ```
     pub fn color(value: Color) -> Property {
         Property::new("color", value)
     }
 
-    /// Create a background-color property
+    /// Creates a CSS `background-color` property for setting element background color.
+    ///
+    /// The `background-color` property sets the background color of an element.
+    /// The background covers the element's content, padding, and border areas.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The color value to use
+    ///
+    /// # Returns
+    ///
+    /// A new `Property` instance representing the background-color property
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::properties::color;
+    /// use mew_css::values::Color;
+    ///
+    /// let prop = color::background_color(Color::LightGray);
+    /// assert_eq!(prop.to_string(), "background-color: lightgray;");
+    ///
+    /// let prop = color::background_color(Color::Rgba(240, 240, 240, 0.5));
+    /// assert_eq!(prop.to_string(), "background-color: rgba(240, 240, 240, 0.5);");
+    /// ```
     pub fn background_color(value: Color) -> Property {
         Property::new("background-color", value)
     }
 
-    /// Create a border-color property
+    /// Creates a CSS `border-color` property for setting element border color.
+    ///
+    /// The `border-color` property sets the color of an element's border on all sides.
+    /// It only has a visible effect when the border style is not `none`.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The color value to use
+    ///
+    /// # Returns
+    ///
+    /// A new `Property` instance representing the border-color property
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use mew_css::properties::color;
+    /// use mew_css::values::Color;
+    ///
+    /// let prop = color::border_color(Color::Black);
+    /// assert_eq!(prop.to_string(), "border-color: black;");
+    /// ```
     pub fn border_color(value: Color) -> Property {
         Property::new("border-color", value)
     }
